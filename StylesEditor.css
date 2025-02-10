@@ -1,48 +1,67 @@
 #root {
-    --tabs-height: 36px;
-    --tabs-indent: 24px;
-    --tabs-inner-gap: 8px;
-    --my-tab-right-radius: 8px;
-    --my-tab-font-size: 1.05rem;
+  --tabs-height: 36px;
+  --tabs-indent: 24px;
+  --tabs-inner-gap: 8px;
+  --my-tab-right-radius: 8px;
+  --my-tab-font-size: 1.05rem;
 }
 
 
 
-/* SPACING */
+/* UNPINNED TAB SPACING */
+.central-box {
+  gap: 6px; /* gap above first unpinned tab */
+  padding-right: 4px;
+  padding-left: 4px;
+}
+
 .Tab .body {
-    height: var(--tabs-height);
+  height: var(--tabs-height);
 }
 
 .Tab {
-		margin-bottom: 3px;
-		margin-left: 6px;  
+  margin-bottom: 3px;
 }
 
-.Tab:not([data-pin=true]) {
-    width: calc(98% - var(--tabs-margin));
+.Tab[data-pin="true"] {
+  margin-top: 6px;
 }
 
+
+
+/* PINNED TABS */
+/* make square */
+.Tab[data-pin="true"] {
+  width: var(--tabs-height);
+}
+
+/* add border */
+.Tab[data-pin="true"] .body::before {
+  box-shadow: inset 0 0 0 1px rgb(82,82,94) !important;
+}
+
+/* spacing */
+.tab-wrapper {
+  margin-right: 4px;
+}
+
+
+
+/* REMOVE ACTIVE TAB BORDER */
+#root .Tab[data-active="true"] .body {
+  box-shadow: none;
+}
 
 
 /* TAB BORDER RADIUS */
 .Tab .body,
-.Tab .color-layer,
-.Tab[data-active=true] .body,
-.Tab[data-pin=true] .body,
-.Tab .containerMark,
 .Tab:hover .body::before,
-.Tab[data-active=true]:hover .body::before,
-.Tab .close,
-.Tab .close:hover,
-.Tab .close:active,
-.Tab[data-active=true] .close:hover,
-.Tab[data-active=true] .close:active,
-.Tab[data-selected=true] .body,
-.Tab[data-selected=true] .body:before {
-    border-top-right-radius: var(--my-tab-right-radius);
-    border-bottom-right-radius: var(--my-tab-right-radius);
-		border-top-left-radius: var(--my-tab-right-radius);
-    border-bottom-left-radius: var(--my-tab-right-radius);
+.Tab[data-selected=true] .body:before,
+.Tab[data-pin="true"] .body::before {
+  border-top-right-radius: var(--my-tab-right-radius);
+  border-bottom-right-radius: var(--my-tab-right-radius);
+  border-top-left-radius: var(--my-tab-right-radius);
+  border-bottom-left-radius: var(--my-tab-right-radius);
 }
 
 
@@ -51,12 +70,12 @@
 .Tab .title,
 .Tab[data-active=true] .title
 {
-    font-size: var(--my-tab-font-size);
-    line-height: 1.3;
+  font-size: var(--my-tab-font-size);
+  line-height: 1.3;
 }
 
 .Tab .custom-title-input {
-    font-size: var(--my-tab-font-size);
+  font-size: var(--my-tab-font-size);
 }
 
 
@@ -67,42 +86,21 @@
 }
 
 .Tab .body:active {
-    transform: scale(0.98);
+  transform: scale(0.98);
 }
 
 
 
-/* REMOVE ACTIVE TAB BORDER */
-.Tab[data-active=true] .body:before {
-    box-shadow: none;
-}
-
-#root[data-theme=plain][data-frame-color-scheme=dark] {
-  --active-el-shadow: none !important;
-}
-
-#root[data-theme=plain][data-frame-color-scheme=light] {
-  --active-el-shadow: none !important;
-}
-
-.Tab[data-active=true] .body {
-  box-shadow:none !important;
-}
-
-#root[data-frame-color-scheme=dark] .Tab[data-colorized=true] {
-  --tabs-activated-shadow: none !important;
-}
-
-#root[data-frame-color-scheme=light] .Tab[data-colorized=true] {
-  --tabs-activated-shadow: none !important;
-}
-
-
-
-/* TREE LINES */
+/* ADJUST TREE LINES FOR NEW SIZES */
 #root[data-tabs-tree-lvl-marks=true] .Tab:not([data-lvl="0"]) .body:after {
-    height: calc(100% + var(--tabs-margin) + var(--tabs-margin) + 1px);
-    top: calc(var(--tabs-margin) * -2.5);
-		background-color: var(--tabs-normal-fg);
+  height: calc(100% + var(--tabs-margin) + var(--tabs-margin) + 1px);
+  top: calc(var(--tabs-margin) * -2.5);
+  background-color: var(--tabs-normal-fg);
 }
 
+
+
+/* MAKE BOTTOM BAR MORE LIKE A TOOLBAR */
+.BottomBar {
+  background: var(--toolbar-bg);
+}
